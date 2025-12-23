@@ -42,7 +42,15 @@ st.markdown("---")
 # LOAD MODEL
 # -----------------------------
 MODEL_PATH = "model/pneumonia_model.h5"
-model = load_model(MODEL_PATH)
+@st.cache_resource
+def load_trained_model():
+    return load_model("model/pneumonia_model.h5")
+
+try:
+    model = load_trained_model()
+except:
+    st.error("⚠️ Model file not found. Please train the model locally before deployment.")
+    st.stop()
 
 # -----------------------------
 # FILE UPLOADER

@@ -1,3 +1,5 @@
+import os
+import urllib.request
 import streamlit as st
 import numpy as np
 import cv2
@@ -38,16 +40,30 @@ st.markdown(
 st.markdown("---")
 
 # -----------------------------
-# LOAD MODEL (SAFE FOR CLOUD)
+# MODEL CONFIG (HUGGING FACE)
 # -----------------------------
+MODEL_URL = (
+    "https://huggingface.co/abiram07/pneumonia-xray-radar/"
+    "resolve/main/pneumonia_model.h5"
+)
+MODEL_DIR = "model"
+MODEL_PATH = os.path.join(MODEL_DIR, "pneumonia_model.h5")
+
 @st.cache_resource
 def load_trained_model():
-    return load_model("model/pneumonia_model.h5")
+    if not os.path.exists(MODEL_DIR):
+        os.makedirs(MODEL_DIR)
+
+    if not os.path.exists(MODEL_PATH):
+        with st.spinner("⬇️ Downloading AI model..."):
+            urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
+
+    return load_model(MODEL_PATH)
 
 try:
     model = load_trained_model()
-except Exception:
-    st.error("⚠️ Model file not found. Please train the model locally before deployment.")
+except Exception as e:
+    st.error("⚠️ Unable to load AI model. Please try again later.")
     st.stop()
 
 # -----------------------------
@@ -82,9 +98,15 @@ if uploaded_file is not None:
 
     col1, col2 = st.columns(2)
 
+    # Display uploaded image
     with col1:
-        st.image(img, caption="🩻 Uploaded Chest X-ray", use_container_width=True)
+        st.image(
+            img,
+            caption="🩻 Uploaded Chest X-ray",
+            use_container_width=True
+        )
 
+    # Prediction
     img_input = preprocess_image(img)
     prediction = model.predict(img_input)[0][0]
 
@@ -118,7 +140,6 @@ if uploaded_file is not None:
     temp_path = "temp_xray.jpg"
     cv2.imwrite(temp_path, img)
 
-    # ✅ CORRECT CALL (MODEL PASSED)
     heatmap = generate_gradcam(model, temp_path)
     cam_image = overlay_heatmap(temp_path, heatmap)
 

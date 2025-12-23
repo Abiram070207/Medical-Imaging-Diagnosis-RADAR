@@ -1,5 +1,4 @@
 import streamlit as st
-import tensorflow as tf
 import numpy as np
 import cv2
 from PIL import Image
@@ -39,16 +38,15 @@ st.markdown(
 st.markdown("---")
 
 # -----------------------------
-# LOAD MODEL
+# LOAD MODEL (SAFE FOR CLOUD)
 # -----------------------------
-MODEL_PATH = "model/pneumonia_model.h5"
 @st.cache_resource
 def load_trained_model():
     return load_model("model/pneumonia_model.h5")
 
 try:
     model = load_trained_model()
-except:
+except Exception:
     st.error("⚠️ Model file not found. Please train the model locally before deployment.")
     st.stop()
 
@@ -84,20 +82,15 @@ if uploaded_file is not None:
 
     col1, col2 = st.columns(2)
 
-    # Show uploaded image
     with col1:
         st.image(img, caption="🩻 Uploaded Chest X-ray", use_container_width=True)
 
-    # Prediction
     img_input = preprocess_image(img)
     prediction = model.predict(img_input)[0][0]
 
     st.markdown("---")
     st.subheader("🧠 AI Prediction")
 
-    # -----------------------------
-    # CLINICAL DECISION LOGIC
-    # -----------------------------
     if prediction >= PNEUMONIA_THRESHOLD:
         label = "🟥 Pneumonia Detected"
         confidence = prediction * 100
@@ -122,14 +115,13 @@ if uploaded_file is not None:
     st.markdown("---")
     st.subheader("🔥 Explainable AI – Grad-CAM")
 
-    # Save temporary image
     temp_path = "temp_xray.jpg"
     cv2.imwrite(temp_path, img)
 
-    heatmap = generate_gradcam(temp_path)
+    # ✅ CORRECT CALL (MODEL PASSED)
+    heatmap = generate_gradcam(model, temp_path)
     cam_image = overlay_heatmap(temp_path, heatmap)
 
-    # Download button
     _, buffer = cv2.imencode(".jpg", cam_image)
     heatmap_bytes = buffer.tobytes()
 

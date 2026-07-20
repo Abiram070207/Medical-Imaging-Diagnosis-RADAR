@@ -1,15 +1,15 @@
-# 🩺 AI-Based Medical Imaging Diagnosis (RADAR)
+# AI-Based Medical Imaging Diagnosis (RADAR)
 
 This repository contains an AI-assisted medical imaging diagnosis system developed under the **RADAR – Rajalakshmi Advanced Diagnostics and Research** club. The system focuses on detecting **pneumonia from chest X-ray images** using deep learning and explainable AI techniques.
 
 ---
 
-## 📌 Problem Statement
+## Problem Statement
 Radiologists often face delays and missed early diagnoses due to the rapidly increasing volume of medical imaging data. Manual analysis of chest X-rays is time-consuming and can lead to diagnostic fatigue, especially in high-volume clinical environments.
 
 ---
 
-## 💡 Proposed Solution
+## Proposed Solution
 This project proposes an **AI-based decision-support system** that:
 - Automatically classifies chest X-ray images as **Normal** or **Pneumonia**
 - Provides reminder-level confidence scores
@@ -18,7 +18,7 @@ This project proposes an **AI-based decision-support system** that:
 
 ---
 
-## 🧠 Key Features
+## Key Features
 - Transfer Learning using **ResNet50**
 - Binary classification (Normal vs Pneumonia)
 - Explainable AI using **Grad-CAM**
@@ -28,7 +28,7 @@ This project proposes an **AI-based decision-support system** that:
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 - **Programming Language:** Python  
 - **Deep Learning:** TensorFlow / Keras  
 - **Model Architecture:** ResNet50 (Transfer Learning)  
@@ -38,7 +38,7 @@ This project proposes an **AI-based decision-support system** that:
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 Medical_Imaging_Diagnosis/
 │
 ├── app.py # Streamlit application
@@ -56,7 +56,7 @@ Medical_Imaging_Diagnosis/
 
 ---
 
-## 🚀 How to Run the Project
+## How to Run the Project
 
 ### 1️⃣ Install Dependencies
 ```bash
@@ -70,28 +70,28 @@ python -m streamlit run app.py
 
 The application will open in your browser and is accessible on both desktop and mobile browsers.
 
-📊 Dataset
+ Dataset
 
 Chest X-ray Pneumonia Dataset (Kaggle)
 
 Dataset is not included in this repository due to size constraints
-⚠️ Disclaimer
+ Disclaimer
 
 This system is designed strictly as a decision-support tool for academic and research purposes. It is not intended for clinical deployment or direct medical diagnosis.
 
-🏫 Organization
+ Organization
 
 RADAR – Rajalakshmi Advanced Diagnostics and Research
 Department of AI & Data Science
 
-## 👨‍💻 Author 
+## Author 
 Abiram R
 Department of AI & Data Science 
 Rajalakshmi Institute of technology
 
 ---
 
-## ✅ WHAT TO DO NEXT
+## WHAT TO DO NEXT
 1. Save this as **`README.md`**
 2. Place it in your **project root**
 3. Commit & push to GitHub
@@ -102,4 +102,4 @@ If you want, next I can:
 - 🔹 Add **project screenshots section**
 - 🔹 Write **final report or PPT**
 
-Just tell me 👑
+Just tell me
